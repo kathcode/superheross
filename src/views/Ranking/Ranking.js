@@ -15,6 +15,7 @@ import * as actions from '../../actions/List';
 const StyledAvatar = styled(Avatar)`
   width: 160px !important;
   height: 160px !important;
+  margin: 0 auto;
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 `;
 
@@ -33,11 +34,19 @@ const StyledTextGray = styled.strong`
 
 
 const StyledContainerAvatar = styled.div`
+  padding: 20px;
   @media (max-width: 992px) {
     justify-content: center;
     display: flex;
     margin-bottom: 30px;
   }
+`;
+
+const StyledCard = styled(Card)`
+  display: inline-block;
+  height: 400px;
+  margin: 5px;
+  width: 95% !important;
 `;
 
 class Ranking extends Component {
@@ -46,14 +55,11 @@ class Ranking extends Component {
   }
   componentDidMount() {
     var heros = [...this.state.heros];
-       
-    const ranking = SortBy(heros, (hero) => {
-      if (hero.ranking) {
-        return hero.ranking;
-      }
-    });
 
-    this.setState({ heros: ranking.slice(0,9) })
+    const ranking = heros.sort(function(a, b) {
+      return a.ranking - b.ranking;
+    });
+    this.setState({ heros: ranking.reverse().slice(0,9) })
   }
 
   render() {
@@ -73,19 +79,18 @@ class Ranking extends Component {
           title="Ranking"
           textButton="List"
         />
-        <div>
-          <h2> Multiple items </h2>
+        <div className="container">
           <Slider {...settings}>
             {this.state.heros.map((hero, position) => (
-              <Card>
-                <div className="row row-eq-height d-flex align-items-center justify-content-center">
-                  <StyledContainerAvatar className="col-lg-12">
+              <StyledCard>
+                <div className="row row-eq-height h-100 d-flex align-items-center justify-content-center">
+                  <StyledContainerAvatar className="col-lg-12 text-center">
                     <StyledAvatar
                       alt={hero.picture}
                       src={hero.picture || 'https://www.namepros.com/a/2018/05/106343_82907bfea9fe97e84861e2ee7c5b4f5b.png'}
                     />
                   </StyledContainerAvatar>
-                  <div className="col-lg-8">
+                  <div className="col-lg-8 text-center">
                     <strong>{hero.name}</strong>
                     <div className="mt-3">{hero.info === '-' ? 'No description added' : hero.info }</div>
                     <div className="text-rigth">
@@ -102,7 +107,7 @@ class Ranking extends Component {
                     </div>
                   </div>
                 </div>
-              </Card>
+              </StyledCard>
             ))}
           </Slider>
         </div>

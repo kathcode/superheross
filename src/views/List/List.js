@@ -52,7 +52,13 @@ class List extends Component {
   };
 
   async componentDidMount() {
-    this.props.getSuperHeros();
+    await this.props.getSuperHeros();
+
+    if (this.props.superHeros && this.props.superHeros.superHeros.length > 0) {
+      this.props.superHeros.superHeros.forEach(hero => {
+        hero.ranking = 0;
+      });
+    }
   }
 
   addRanking = (position) => {
