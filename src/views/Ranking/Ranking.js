@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import Card from '@material-ui/core/Card';
 import StyledHeader from '../../components/StyledHeader/StyledHeader';
+import SuperHeros from '../../api/superheros';
 
 class Ranking extends Component {
   render() {
@@ -24,7 +25,7 @@ class Ranking extends Component {
         <div>
           <h2> Multiple items </h2>
           <Slider {...settings}>
-            
+            ...
           </Slider>
         </div>
       </div>

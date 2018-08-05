@@ -3,12 +3,16 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions/List';
 
 import SuperHeros from '../../api/superheros';
 
 import styled from 'styled-components';
 import StyledHeader from '../../components/StyledHeader/StyledHeader';
 import GridList from '../../components/GridList/GridList';
+import TableList from '../../components/TableList/TableList';
 
 const StyledAvatar = styled(Avatar)`
   width: 160px !important;
@@ -96,11 +100,11 @@ class List extends Component {
             {this.state.superHeros.length > 0 && this.state.superHeros.map((hero, position) => (
               <React.Fragment>
                 {this.state.listStyle && (
-                  <GridList hero={hero} position={position} superHeros={this.state.superHeros} />
+                  <GridList hero={hero} position={position} addRanking={this.addRanking} superHeros={this.state.superHeros} />
                 )}
 
                 {!this.state.listStyle && (
-                  <div>sss</div>
+                  <TableList hero={hero} position={position} addRanking={this.addRanking} superHeros={this.state.superHeros} />
                 )}
               </React.Fragment>
             ))}
@@ -111,4 +115,7 @@ class List extends Component {
   }
 }
 
-export default List;
+export default connect(
+  state => state,
+  actions
+)(List);
