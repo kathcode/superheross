@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,6 +8,7 @@ import SuperHeros from '../../api/superheros';
 
 import styled from 'styled-components';
 import StyledHeader from '../../components/StyledHeader/StyledHeader';
+import GridList from '../../components/GridList/GridList';
 
 const StyledAvatar = styled(Avatar)`
   width: 160px !important;
@@ -29,7 +29,6 @@ const StyledTextGray = styled.strong`
   font-size: 1.2em;
 `;
 
-
 const StyledContainerAvatar = styled.div`
   @media (max-width: 992px) {
     justify-content: center;
@@ -38,9 +37,15 @@ const StyledContainerAvatar = styled.div`
   }
 `;
 
+const StyledIcon = styled.i`
+  height: 40px;
+  wight: 40px;
+`;
+
 class List extends Component {
   state = {
     superHeros: [],
+    listStyle: true
   };
 
   async componentDidMount() {
@@ -60,6 +65,12 @@ class List extends Component {
     });
   }
 
+  changeView = () => {
+    this.setState({
+      listStyle: !this.state.listStyle,
+    })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -69,33 +80,29 @@ class List extends Component {
           title="Superheros"
           textButton="Ranking"
         />
+        <div className="text-center">
+          <IconButton  onClick={this.changeView} aria-label="Add to favorites">
+            {this.state.listStyle && (
+              <i class="fas fa-list-ul" />
+            )}
+
+            {!this.state.listStyle && (
+              <i class="fas fa-th-large" />
+            )}
+          </IconButton>
+        </div>
         <div className="container mt-3">
           <div className="row row-eq-height">
-            {this.state.superHeros.map((hero, position) => (
-              <div className="col-md-6 mb-3">
-                <Card className="pt-3 pr-3 pl-3 pb-3">
-                  <div className="row row-eq-height d-flex align-items-center justify-content-center">
-                    <StyledContainerAvatar className="col-lg-4">
-                      <StyledAvatar
-                        alt={hero.picture}
-                        src={hero.picture || 'https://www.namepros.com/a/2018/05/106343_82907bfea9fe97e84861e2ee7c5b4f5b.png'}
-                      />
-                    </StyledContainerAvatar>
-                    <div className="col-lg-8">
-                      <strong>{hero.name}</strong>
-                      <div className="mt-3">{hero.info === '-' ? 'No description added' : hero.info }</div>
-                      <div className="text-rigth">
-                        <StyledCardActions>
-                          <IconButton  onClick={() => this.addRanking(position)} aria-label="Add to favorites">
-                            <i className="far fa-star"></i>
-                          </IconButton>
-                          <StyledTextGray>{this.state.superHeros[position].ranking || 0}</StyledTextGray>
-                        </StyledCardActions>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </div>
+            {this.state.superHeros.length > 0 && this.state.superHeros.map((hero, position) => (
+              <React.Fragment>
+                {this.state.listStyle && (
+                  <GridList hero={hero} position={position} superHeros={this.state.superHeros} />
+                )}
+
+                {!this.state.listStyle && (
+                  <div>sss</div>
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>
