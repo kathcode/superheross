@@ -58,7 +58,11 @@ class GridList extends Component {
               <div className="text-rigth">
                 <StyledCardActions>
                   <IconButton  onClick={() => addRanking(position)} aria-label="Add to favorites">
-                    <i className="far fa-star"></i>
+                    {superHeros[position].ranking > 0 ?
+                      <i className="fas fa-star"></i>
+                      :
+                      <i className="far fa-star"></i>
+                    }
                   </IconButton>
                   <StyledTextGray>{superHeros[position].ranking || 0}</StyledTextGray>
                 </StyledCardActions>

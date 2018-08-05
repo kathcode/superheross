@@ -48,18 +48,15 @@ const StyledIcon = styled.i`
 
 class List extends Component {
   state = {
-    superHeros: [],
     listStyle: true
   };
 
   async componentDidMount() {
-    const superHeros = await SuperHeros.getSuperHeros();
-
-    this.setState({superHeros});
+    this.props.getSuperHeros();
   }
 
   addRanking = (position) => {
-    const superheros = [...this.state.superHeros];
+    const superheros = [...this.props.superHeros.superHeros];
     const hero = superheros[position];
     const ranking = hero['ranking'] ? hero['ranking'] : 0;
     hero['ranking'] = ranking + 1;
@@ -76,6 +73,10 @@ class List extends Component {
   }
 
   render() {
+    const {
+      superHeros
+    } =  this.props;
+
     return (
       <React.Fragment>
         <StyledHeader
@@ -97,14 +98,14 @@ class List extends Component {
         </div>
         <div className="container mt-3">
           <div className="row row-eq-height">
-            {this.state.superHeros.length > 0 && this.state.superHeros.map((hero, position) => (
+            {superHeros.superHeros.length > 0 && superHeros.superHeros.map((hero, position) => (
               <React.Fragment>
                 {this.state.listStyle && (
-                  <GridList hero={hero} position={position} addRanking={this.addRanking} superHeros={this.state.superHeros} />
+                  <GridList hero={hero} position={position} addRanking={this.addRanking} superHeros={superHeros.superHeros} />
                 )}
 
                 {!this.state.listStyle && (
-                  <TableList hero={hero} position={position} addRanking={this.addRanking} superHeros={this.state.superHeros} />
+                  <TableList hero={hero} position={position} addRanking={this.addRanking} superHeros={superHeros.superHeros} />
                 )}
               </React.Fragment>
             ))}

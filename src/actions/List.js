@@ -7,7 +7,7 @@ export const updateSuperHerosList = (data) => ({
   payload: data,
 });
 
-export const fetchOrganizations = () => async (dispatch) => {
+export const getSuperHeros = () => async (dispatch) => {
   try {
     const response = await SuperHeros.getSuperHeros();
     dispatch(updateSuperHerosList(response));
