@@ -1,4 +1,4 @@
-import SuperHeros from '../api/superheros';
+import { superHerosListRef } from '../firebase';
 
 import constants from '../constants/constants';
 
@@ -7,12 +7,17 @@ export const updateSuperHerosList = (data) => ({
   payload: data,
 });
 
-export const getSuperHeros = () => async (dispatch) => {
-  try {
-    const response = await SuperHeros.getSuperHeros();
-    dispatch(updateSuperHerosList(response));
-    console.log(response)
-  } catch (ex) {
-    console.log("Error with the service")
-  }
-};
+export const updateHero = NewData => async () => {
+  superHerosListRef.update(NewData)
+}
+
+export const fetchSuperHeros = () => async dispatch => {
+  superHerosListRef.on('value', snapshot => {
+    const data = snapshot.val();
+    var result = Object.keys(data).map(function(key) {
+      return data[key];
+    });
+
+    dispatch(updateSuperHerosList(result))
+  })
+}
