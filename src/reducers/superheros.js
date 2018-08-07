@@ -11,6 +11,7 @@ const createReducer = (initialState, handlers) => {
 
 const initialState = {
   superHeros: [],
+  heroDetail: {},
 };
 
 export default createReducer(initialState, {
@@ -24,4 +25,11 @@ export default createReducer(initialState, {
       superHeros: action.payload,
     };
   },
+
+  [superHeros.LOAD_HERO](state, action) {
+    return {
+      ...state,
+      heroDetail: action.payload,
+    };
+  }
 });

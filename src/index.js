@@ -14,6 +14,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
 import List from './views/List/List';
 import Ranking from './views/Ranking/Ranking';
+import CardDetail from './components/CardDetail/CardDetail';
 
 // Redux configuration
 const middleware = [thunk];
@@ -39,6 +40,11 @@ render(
             path="/ranking"
             exact
             component={Ranking}
+          />
+          <Route
+            path="/:id"
+            exact
+            component={CardDetail}
           />
         </Switch>
       </Provider>

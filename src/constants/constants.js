@@ -1,3 +1,4 @@
 export default {
   LOAD_SUPERHEROS: 'LOAD_SUPERHEROS',
+  LOAD_HERO: 'LOAD_HERO',
 }

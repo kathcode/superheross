@@ -38,7 +38,8 @@ class GridList extends Component {
     const {
       hero,
       position,
-      addRanking
+      addRanking,
+      onClick,
     } = this.props;
 
     return (
@@ -56,6 +57,7 @@ class GridList extends Component {
               <div className="mt-3">{hero.info === '-' ? 'No description added' : hero.info }</div>
               <div className="text-rigth">
                 <StyledCardActions>
+                  <IconButton onClick={onClick}><i className="fas fa-eye"></i></IconButton>
                   <IconButton  onClick={() => addRanking(position)} aria-label="Add to favorites">
                     {hero.ranking > 0 ?
                       <i className="fas fa-star"></i>

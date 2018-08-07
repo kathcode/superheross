@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
-import * as firebase from 'firebase';
 
 import * as actions from '../../actions/List';
 
@@ -37,6 +36,10 @@ class List extends Component {
     this.setState({
       listStyle: !this.state.listStyle,
     })
+  }
+
+  goToDetail = (heroId) => {
+    this.props.history.push(`/${heroId}`);
   }
 
   render() {
@@ -73,6 +76,7 @@ class List extends Component {
                     position={hero}
                     addRanking={this.addRanking}
                     superHeros={superHeros.superHeros}
+                    onClick={() => this.goToDetail(hero)}
                   />
                 )}
 
@@ -82,6 +86,7 @@ class List extends Component {
                     position={hero}
                     addRanking={this.addRanking}
                     superHeros={superHeros.superHeros}
+                    onClick={() => this.goToDetail(hero)}
                   />
                 )}
               </React.Fragment>
