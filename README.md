@@ -5,3 +5,5 @@
     $ cd superheros
     $ yarn install
     $ yarn start
+    
+[Look at the gif](http://g.recordit.co/6GSuU35Xjv.gif)
