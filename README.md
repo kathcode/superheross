@@ -3,5 +3,5 @@
 
 ### Starts the proyect:
     $ cd superheros
-    $ npm install
+    $ yarn install
     $ yarn start
