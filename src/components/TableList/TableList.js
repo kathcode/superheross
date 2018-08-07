@@ -38,7 +38,6 @@ class TableList extends Component {
     const {
       hero,
       position,
-      superHeros,
       addRanking
     } = this.props;
 
@@ -60,13 +59,13 @@ class TableList extends Component {
               <div className="text-rigth">
                 <StyledCardActions>
                   <IconButton  onClick={() => addRanking(position)} aria-label="Add to favorites">
-                    {superHeros[position].ranking > 0 ?
+                    {hero.ranking > 0 ?
                       <i className="fas fa-star"></i>
                       :
                       <i className="far fa-star"></i>
                     }
                   </IconButton>
-                  <StyledTextGray>{superHeros[position].ranking || 0}</StyledTextGray>
+                  <StyledTextGray>{hero.ranking || 0}</StyledTextGray>
                 </StyledCardActions>
               </div>
             </div>

@@ -4,7 +4,6 @@ import Slider from 'react-slick';
 import Card from '@material-ui/core/Card';
 import StyledHeader from '../../components/StyledHeader/StyledHeader';
 import styled from 'styled-components';
-import SortBy from 'lodash/sortBy';
 
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
@@ -51,15 +50,18 @@ const StyledCard = styled(Card)`
 
 class Ranking extends Component {
   state = {
-    heros: this.props.superHeros.superHeros,
+    heros: [],
   }
-  componentDidMount() {
-    var heros = [...this.state.heros];
+  
+  async componentDidMount() {
+    await this.props.fetchSuperHeros();
 
+    var heros = [...this.props.superHeros.superHeros];
     const ranking = heros.sort(function(a, b) {
       return a.ranking - b.ranking;
     });
-    this.setState({ heros: ranking.reverse().slice(0,9) })
+
+    this.setState({ heros: ranking.reverse().slice(0, 10) })
   }
 
   render() {
@@ -80,36 +82,38 @@ class Ranking extends Component {
           textButton="List"
         />
         <div className="container">
-          <Slider {...settings}>
-            {this.state.heros.map((hero, position) => (
-              <StyledCard>
-                <div className="row row-eq-height h-100 d-flex align-items-center justify-content-center">
-                  <StyledContainerAvatar className="col-lg-12 text-center">
-                    <StyledAvatar
-                      alt={hero.picture}
-                      src={hero.picture || 'https://www.namepros.com/a/2018/05/106343_82907bfea9fe97e84861e2ee7c5b4f5b.png'}
-                    />
-                  </StyledContainerAvatar>
-                  <div className="col-lg-8 text-center">
-                    <strong>{hero.name}</strong>
-                    <div className="mt-3">{hero.info === '-' ? 'No description added' : hero.info }</div>
-                    <div className="text-rigth">
-                      <StyledCardActions>
-                        <IconButton aria-label="Add to favorites">
-                          {this.state.heros[position].ranking > 0 ?
-                            <i className="fas fa-star"></i>
-                            :
-                            <i className="far fa-star"></i>
-                          }
-                        </IconButton>
-                        <StyledTextGray>{this.state.heros[position].ranking || 0}</StyledTextGray>
-                      </StyledCardActions>
+          {this.state.heros.length > 0 &&
+            <Slider {...settings}>
+              {this.state.heros.map((hero, position) => (
+                <StyledCard>
+                  <div className="row row-eq-height h-100 d-flex align-items-center justify-content-center">
+                    <StyledContainerAvatar className="col-lg-12 text-center">
+                      <StyledAvatar
+                        alt={hero.picture}
+                        src={hero.picture || 'https://www.namepros.com/a/2018/05/106343_82907bfea9fe97e84861e2ee7c5b4f5b.png'}
+                      />
+                    </StyledContainerAvatar>
+                    <div className="col-lg-8 text-center">
+                      <strong>{hero.name}</strong>
+                      <div className="mt-3">{hero.info === '-' ? 'No description added' : hero.info }</div>
+                      <div className="text-rigth">
+                        <StyledCardActions>
+                          <IconButton aria-label="Add to favorites">
+                            {this.state.heros[position].ranking > 0 ?
+                              <i className="fas fa-star"></i>
+                              :
+                              <i className="far fa-star"></i>
+                            }
+                          </IconButton>
+                          <StyledTextGray>{this.state.heros[position].ranking || 0}</StyledTextGray>
+                        </StyledCardActions>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </StyledCard>
-            ))}
-          </Slider>
+                </StyledCard>
+              ))}
+            </Slider>
+          }
         </div>
       </div>
     );
