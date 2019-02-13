@@ -33,3 +33,5 @@ export default createReducer(initialState, {
     };
   }
 });
+
+// Reference of Object.prototype.hasOwnProperty.call => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
